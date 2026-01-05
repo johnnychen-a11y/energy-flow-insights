@@ -1,0 +1,483 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 220 20% 8%;
+    --foreground: 210 20% 95%;
+
+    --card: 220 18% 12%;
+    --card-foreground: 210 20% 95%;
+
+    --popover: 220 18% 12%;
+    --popover-foreground: 210 20% 95%;
+
+    --primary: 185 85% 50%;
+    --primary-foreground: 220 20% 8%;
+
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 210 20% 95%;
+
+    --muted: 220 15% 15%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 185 85% 50%;
+    --accent-foreground: 220 20% 8%;
+
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 220 15% 22%;
+    --input: 220 15% 22%;
+    --ring: 185 85% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom Industrial Colors */
+    --solar-yellow: 45 95% 55%;
+    --green-energy: 145 75% 45%;
+    --grid-orange: 25 95% 55%;
+    --data-blue: 210 90% 55%;
+    --warning-amber: 35 95% 55%;
+    --critical-red: 0 85% 55%;
+    --success-green: 145 75% 45%;
+
+    /* Glow effects */
+    --glow-primary: 0 0 20px hsl(185 85% 50% / 0.4);
+    --glow-green: 0 0 20px hsl(145 75% 45% / 0.4);
+    --glow-orange: 0 0 20px hsl(25 95% 55% / 0.4);
+    --glow-yellow: 0 0 20px hsl(45 95% 55% / 0.4);
+    --glow-red: 0 0 20px hsl(0 85% 55% / 0.4);
+  }
+
+  .dark {
+    --background: 220 20% 8%;
+    --foreground: 210 20% 95%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-md border border-border/50 rounded-xl;
+  }
+
+  .glass-card-dark {
+    @apply bg-card/90 backdrop-blur-md border border-border/30 rounded-xl;
+  }
+
+  .status-indicator {
+    @apply w-2.5 h-2.5 rounded-full;
+  }
+
+  .status-run {
+    @apply bg-green-energy;
+    box-shadow: var(--glow-green);
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .status-idle {
+    @apply bg-muted-foreground/50;
+  }
+
+  .energy-card-green {
+    @apply border-l-4 border-l-green-energy;
+    box-shadow: inset 4px 0 12px hsl(145 75% 45% / 0.1);
+  }
+
+  .energy-card-orange {
+    @apply border-l-4 border-l-grid-orange;
+    box-shadow: inset 4px 0 12px hsl(25 95% 55% / 0.1);
+  }
+
+  .kpi-card {
+    @apply glass-card p-3 transition-all duration-300 cursor-pointer hover:border-primary/50;
+  }
+
+  .kpi-card-warning {
+    @apply border-warning-amber/50 bg-warning-amber/5;
+  }
+
+  .kpi-card-critical {
+    @apply border-critical-red/50 bg-critical-red/10 animate-pulse;
+  }
+
+  .kpi-card-active {
+    @apply border-primary ring-2 ring-primary/30;
+  }
+
+  .layer-section {
+    @apply glass-card p-4 relative overflow-hidden;
+  }
+
+  .layer-header {
+    @apply text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2;
+  }
+
+  .data-value {
+    @apply font-mono text-lg font-semibold;
+  }
+
+  .data-label {
+    @apply text-xs text-muted-foreground uppercase tracking-wide;
+  }
+
+  .control-button {
+    @apply px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200;
+  }
+
+  .control-button-primary {
+    @apply bg-primary/20 text-primary hover:bg-primary/30 border border-primary/30;
+  }
+
+  .control-button-green {
+    @apply bg-green-energy/20 text-green-energy hover:bg-green-energy/30 border border-green-energy/30;
+  }
+
+  .control-button-orange {
+    @apply bg-grid-orange/20 text-grid-orange hover:bg-grid-orange/30 border border-grid-orange/30;
+  }
+
+  .alert-item {
+    @apply p-2.5 rounded-lg border border-border/30 bg-secondary/30 text-sm;
+  }
+
+  .alert-info {
+    @apply border-l-2 border-l-data-blue;
+  }
+
+  .alert-warning {
+    @apply border-l-2 border-l-warning-amber bg-warning-amber/5;
+  }
+
+  .alert-critical {
+    @apply border-l-2 border-l-critical-red bg-critical-red/10;
+  }
+
+  .toggle-switch {
+    @apply relative inline-flex h-5 w-10 items-center rounded-full transition-colors duration-200;
+  }
+
+  .toggle-switch-green {
+    @apply bg-green-energy;
+  }
+
+  .toggle-switch-orange {
+    @apply bg-grid-orange;
+  }
+
+  .machine-card {
+    @apply glass-card p-3 transition-all duration-300;
+  }
+
+  .machine-card-green {
+    @apply border-green-energy/40 hover:border-green-energy/60;
+  }
+
+  .machine-card-orange {
+    @apply border-grid-orange/40 hover:border-grid-orange/60;
+  }
+}
+
+@layer utilities {
+  .text-solar-yellow {
+    color: hsl(var(--solar-yellow));
+  }
+
+  .text-green-energy {
+    color: hsl(var(--green-energy));
+  }
+
+  .text-grid-orange {
+    color: hsl(var(--grid-orange));
+  }
+
+  .text-data-blue {
+    color: hsl(var(--data-blue));
+  }
+
+  .text-warning-amber {
+    color: hsl(var(--warning-amber));
+  }
+
+  .text-critical-red {
+    color: hsl(var(--critical-red));
+  }
+
+  .bg-solar-yellow {
+    background-color: hsl(var(--solar-yellow));
+  }
+
+  .bg-green-energy {
+    background-color: hsl(var(--green-energy));
+  }
+
+  .bg-grid-orange {
+    background-color: hsl(var(--grid-orange));
+  }
+
+  .bg-data-blue {
+    background-color: hsl(var(--data-blue));
+  }
+
+  .bg-warning-amber {
+    background-color: hsl(var(--warning-amber));
+  }
+
+  .bg-critical-red {
+    background-color: hsl(var(--critical-red));
+  }
+
+  .border-solar-yellow {
+    border-color: hsl(var(--solar-yellow));
+  }
+
+  .border-green-energy {
+    border-color: hsl(var(--green-energy));
+  }
+
+  .border-grid-orange {
+    border-color: hsl(var(--grid-orange));
+  }
+
+  .border-data-blue {
+    border-color: hsl(var(--data-blue));
+  }
+
+  .border-warning-amber {
+    border-color: hsl(var(--warning-amber));
+  }
+
+  .border-critical-red {
+    border-color: hsl(var(--critical-red));
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 8px hsl(145 75% 45% / 0.6);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 16px hsl(145 75% 45% / 0.8);
+  }
+}
+
+@keyframes flow-down {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes flow-right {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes data-pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Energy flow particle animations */
+@keyframes energy-particle-down {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes energy-particle-right {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes energy-glow-pulse {
+  0%, 100% {
+    filter: brightness(1) drop-shadow(0 0 2px currentColor);
+  }
+  50% {
+    filter: brightness(1.3) drop-shadow(0 0 6px currentColor);
+  }
+}
+
+@keyframes flow-dash {
+  0% {
+    stroke-dashoffset: 20;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes data-flow-down {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.animate-flow-down {
+  animation: flow-down 2s linear infinite;
+}
+
+.animate-flow-right {
+  animation: flow-right 1.5s linear infinite;
+}
+
+.animate-data-pulse {
+  animation: data-pulse 1s ease-in-out infinite;
+}
+
+.animate-energy-particle-down {
+  animation: energy-particle-down 1.5s linear infinite;
+}
+
+.animate-energy-particle-right {
+  animation: energy-particle-right 1s linear infinite;
+}
+
+.animate-energy-glow {
+  animation: energy-glow-pulse 2s ease-in-out infinite;
+}
+
+/* Energy flow line styles */
+.energy-flow-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.energy-flow-line::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  animation: energy-particle-right 1s linear infinite;
+}
+
+.energy-flow-vertical::before {
+  background: linear-gradient(180deg, transparent, currentColor, transparent);
+  animation: energy-particle-down 1.5s linear infinite;
+}
+
+/* Power source transition classes */
+.power-transition-enter {
+  animation: power-fade-in 0.4s ease-out forwards;
+}
+
+.power-transition-exit {
+  animation: power-fade-out 0.3s ease-in forwards;
+}
+
+@keyframes power-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes power-fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
